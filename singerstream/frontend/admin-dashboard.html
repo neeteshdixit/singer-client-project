@@ -1,0 +1,25 @@
+<input id="title" placeholder="Title">
+<select id="type">
+  <option>song</option>
+  <option>podcast</option>
+  <option>video</option>
+</select>
+<input type="file" id="file">
+<textarea id="desc"></textarea>
+<button onclick="upload()">Upload</button>
+
+<script>
+function upload() {
+  const fd = new FormData();
+  fd.append("title", title.value);
+  fd.append("type", type.value);
+  fd.append("description", desc.value);
+  fd.append("file", file.files[0]);
+
+  fetch("http://localhost:3000/api/content", {
+    method: "POST",
+    headers: { Authorization: localStorage.getItem("token") },
+    body: fd
+  });
+}
+</script>
