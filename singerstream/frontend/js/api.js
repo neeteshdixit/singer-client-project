@@ -3,6 +3,13 @@ class APIClient {
     this.baseURL = API_BASE_URL;
   }
 
+  // Build final URL: accept either full URLs or relative endpoints
+  buildURL(endpoint) {
+    if (!endpoint) return this.baseURL;
+    if (/^https?:\/\//.test(endpoint)) return endpoint;
+    return `${this.baseURL}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
+  }
+
   getToken() {
     return localStorage.getItem(TOKEN_KEY);
   }
@@ -19,13 +26,15 @@ class APIClient {
     }
 
     try {
-      const response = await fetch(`${this.baseURL}${endpoint}`, {
+      const url = this.buildURL(endpoint);
+      const response = await fetch(url, {
         ...options,
         headers
       });
 
       if (!response.ok) {
-        const error = await response.json();
+        let error;
+        try { error = await response.json(); } catch (e) { error = { error: response.statusText }; }
         throw new Error(error.error || 'Request failed');
       }
 

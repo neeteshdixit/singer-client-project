@@ -7,18 +7,22 @@
   <h1>Content</h1>
   <ul id="list"></ul>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script>
-fetch("http://localhost:3000/api/content")
-  .then(res => res.json())
-  .then(data => {
-    const list = document.getElementById("list");
+(async function() {
+  try {
+    const data = await api.get('/content');
+    const list = document.getElementById('list');
     data.forEach(c => {
-      const li = document.createElement("li");
-      li.innerHTML = `${c.title} 
-      <audio controls src="http://localhost:3000/api/content/stream/${c.id}"></audio>`;
+      const li = document.createElement('li');
+      li.innerHTML = `${c.title} <audio controls src="${API_BASE_URL}/content/stream/${c.id}"></audio>`;
       list.appendChild(li);
     });
-  });
+  } catch (err) {
+    console.error('Failed to load content', err);
+  }
+})();
 </script>
 </body>
 </html>

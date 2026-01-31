@@ -8,18 +8,22 @@
 <textarea id="desc"></textarea>
 <button onclick="upload()">Upload</button>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
 <script>
-function upload() {
+async function upload() {
   const fd = new FormData();
-  fd.append("title", title.value);
-  fd.append("type", type.value);
-  fd.append("description", desc.value);
-  fd.append("file", file.files[0]);
+  fd.append('title', title.value);
+  fd.append('type', type.value);
+  fd.append('description', desc.value);
+  fd.append('file', file.files[0]);
 
-  fetch("http://localhost:3000/api/content", {
-    method: "POST",
-    headers: { Authorization: localStorage.getItem("token") },
-    body: fd
-  });
+  try {
+    await api.upload('/content', fd);
+    alert('Uploaded');
+  } catch (err) {
+    console.error('Upload failed', err);
+    alert('Upload failed');
+  }
 }
 </script>
