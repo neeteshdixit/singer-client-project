@@ -4,25 +4,46 @@
   <title>SingerStream</title>
 </head>
 <body>
-  <h1>Content</h1>
-  <ul id="list"></ul>
+  <h1>SingerStream</h1>
+  <ul id="contentList"></ul>
 
-<script src="js/config.js"></script>
-<script src="js/api.js"></script>
-<script>
-(async function() {
-  try {
-    const data = await api.get('/content');
-    const list = document.getElementById('list');
-    data.forEach(c => {
-      const li = document.createElement('li');
-      li.innerHTML = `${c.title} <audio controls src="${API_BASE_URL}/content/stream/${c.id}"></audio>`;
-      list.appendChild(li);
-    });
-  } catch (err) {
-    console.error('Failed to load content', err);
-  }
-})();
-</script>
+  <script>
+    const API_BASE = "http://localhost:3000/api";
+
+    fetch(API_BASE + "/content")
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById("contentList");
+
+        if (data.length === 0) {
+          list.innerHTML = "<li>No content found</li>";
+        }
+
+        data.forEach(item => {
+          const li = document.createElement("li");
+
+          if (item.type === "video") {
+            li.innerHTML = `
+              <h3>${item.title}</h3>
+              <video width="300" controls>
+                <source src="${API_BASE}/content/stream/${item.id}">
+              </video>
+            `;
+          } else {
+            li.innerHTML = `
+              <h3>${item.title}</h3>
+              <audio controls>
+                <source src="${API_BASE}/content/stream/${item.id}">
+              </audio>
+            `;
+          }
+
+          list.appendChild(li);
+        });
+      })
+      .catch(err => {
+        console.error("Fetch error:", err);
+      });
+  </script>
 </body>
 </html>

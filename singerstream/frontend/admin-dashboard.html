@@ -1,29 +1,36 @@
-<input id="title" placeholder="Title">
+<!DOCTYPE html>
+<html>
+<head><title>Admin Upload</title></head>
+<body>
+<h2>Upload Content</h2>
+
+<input id="title" placeholder="Title"><br>
 <select id="type">
-  <option>song</option>
-  <option>podcast</option>
-  <option>video</option>
-</select>
-<input type="file" id="file">
-<textarea id="desc"></textarea>
+  <option value="song">Song</option>
+  <option value="podcast">Podcast</option>
+  <option value="video">Video</option>
+</select><br>
+<textarea id="desc" placeholder="Description"></textarea><br>
+<input type="file" id="file"><br>
 <button onclick="upload()">Upload</button>
 
 <script src="js/config.js"></script>
-<script src="js/api.js"></script>
 <script>
-async function upload() {
-  const fd = new FormData();
-  fd.append('title', title.value);
-  fd.append('type', type.value);
-  fd.append('description', desc.value);
-  fd.append('file', file.files[0]);
+function upload(){
+  const fd=new FormData();
+  fd.append("title",title.value);
+  fd.append("type",type.value);
+  fd.append("description",desc.value);
+  fd.append("file",file.files[0]);
 
-  try {
-    await api.upload('/content', fd);
-    alert('Uploaded');
-  } catch (err) {
-    console.error('Upload failed', err);
-    alert('Upload failed');
-  }
+  fetch(API_BASE+"/content",{
+    method:"POST",
+    headers:{Authorization:localStorage.getItem("token")},
+    body:fd
+  })
+  .then(r=>r.json())
+  .then(d=>alert(d.msg));
 }
 </script>
+</body>
+</html>

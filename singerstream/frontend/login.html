@@ -1,21 +1,32 @@
-<input id="email" placeholder="email">
-<input id="password" type="password">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+</head>
+<body>
+<h2>Login</h2>
+<input id="email" placeholder="Email"><br>
+<input id="password" type="password" placeholder="Password"><br>
 <button onclick="login()">Login</button>
 
 <script src="js/config.js"></script>
-<script src="js/api.js"></script>
 <script>
-async function login() {
-  try {
-    const data = await api.post('/auth/login', {
-      email: email.value,
-      password: password.value
-    });
-    localStorage.setItem(TOKEN_KEY, data.token);
-    alert('Logged in');
-  } catch (err) {
-    console.error(err);
-    alert('Login failed');
-  }
+function login(){
+  fetch(API_BASE + "/auth/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      email:email.value,
+      password:password.value
+    })
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    localStorage.setItem("token", d.token);
+    alert("Login success");
+    window.location="admin-dashboard.html";
+  });
 }
 </script>
+</body>
+</html>

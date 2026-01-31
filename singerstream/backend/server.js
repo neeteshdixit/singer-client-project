@@ -13,6 +13,18 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/content", contentRoutes);
 
+// Serve frontend static files
+const path = require('path');
+const frontendDir = path.resolve(__dirname, '..', 'frontend');
+app.use(express.static(frontendDir));
+
+// Fallback to index.html for SPA routes
+app.get('*', (req, res, next) => {
+  // Don't override API routes
+  if (req.path.startsWith('/api/')) return next();
+  res.sendFile(path.join(frontendDir, 'index.html'));
+});
+
 // Global error handlers to prevent unexpected process exit during development
 process.on('unhandledRejection', (reason) => {
   console.error('Unhandled Rejection:', reason);
