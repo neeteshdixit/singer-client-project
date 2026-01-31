@@ -1,5 +1,5 @@
 const { Pool } = require("pg");
-require("dotenv").config({ path: require('path').resolve(__dirname, '..', '.env') });
+require("dotenv").config({ path: require('path').resolve(__dirname, '..', '..', '.env') });
 
 // Use DATABASE_URL when provided (e.g., on hosted platforms), otherwise use individual DB_* env vars
 const poolConfig = process.env.DATABASE_URL
@@ -23,5 +23,10 @@ console.log("DB config:", {
 });
 
 const pool = new Pool(poolConfig);
+
+// Catch errors emitted by idle clients to avoid crashes
+pool.on('error', (err) => {
+  console.error('Unexpected DB error on idle client', err);
+});
 
 module.exports = pool;
