@@ -1,28 +1,155 @@
 <!DOCTYPE html>
 <html>
-<head><title>Register</title></head>
-<body>
-<h2>Register</h2>
-<input id="username" placeholder="Username"><br>
-<input id="email" placeholder="Email"><br>
-<input id="password" type="password" placeholder="Password"><br>
-<button onclick="register()">Register</button>
+<head>
+  <title>Signup - SingerStream</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<script src="js/config.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #ff512f, #dd2476);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .signup-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 340px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .signup-box h2 {
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #ff512f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #dd2476;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .google {
+      background: #db4437;
+    }
+
+    .facebook {
+      background: #3b5998;
+    }
+
+    p {
+      margin-top: 15px;
+    }
+
+    a {
+      color: #ff512f;
+      text-decoration: none;
+    }
+
+    .divider {
+      margin: 15px 0;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+<div class="signup-box">
+  <h2>Create Account</h2>
+
+  <!-- Normal signup -->
+  <input type="text" id="username" placeholder="Username" required>
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="password" id="password" placeholder="Password" required>
+
+  <button onclick="register()">Sign Up</button>
+
+  <div class="divider">OR</div>
+
+
+<button class="social-btn google">
+  <i class="fa-brands fa-google"></i> Login with Google
+</button>
+
+<button class="social-btn facebook">
+  <i class="fa-brands fa-facebook"></i> Login with Facebook
+</button>
+
+
+
+
+  <p>Already have an account?  
+    <a href="login.html">Login</a>
+  </p>
+</div>
+
 <script>
-function register(){
-  fetch(API_BASE+"/auth/register",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      username:username.value,
-      email:email.value,
-      password:password.value
-    })
-  })
-  .then(r=>r.json())
-  .then(()=>alert("Registered successfully"));
-}
+// const API_BASE = "http://localhost:3000/api";
+
+// // Normal register
+// function register() {
+//   fetch(API_BASE + "/auth/register", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       username: document.getElementById("username").value,
+//       email: document.getElementById("email").value,
+//       password: document.getElementById("password").value
+//     })
+//   })
+//   .then(res => res.json())
+//   .then(data => {
+//     alert("Signup successful! Now login.");
+//     window.location = "login.html";
+//   })
+//   .catch(err => console.log("Error:", err));
+// }
+
+// // Google OAuth
+// function loginWithGoogle() {
+//   window.location.href = API_BASE + "/auth/google";
+// }
+
+// // Facebook OAuth
+// function loginWithFacebook() {
+//   window.location.href = API_BASE + "/auth/facebook";
+// }
 </script>
+
 </body>
 </html>

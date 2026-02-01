@@ -1,36 +1,185 @@
 <!DOCTYPE html>
 <html>
-<head><title>Admin Upload</title></head>
+<head>
+  <title>Admin Dashboard - SingerStream</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+    }
+
+    header {
+      background: #1e3c72;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+    }
+
+    .container {
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .upload-box, .list-box {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      flex: 1;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #1e3c72;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2a5298;
+    }
+
+    .item {
+      border-bottom: 1px solid #ddd;
+      padding: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+
+    .delete {
+      background: crimson;
+    }
+
+    .delete:hover {
+      background: darkred;
+    }
+  </style>
+</head>
 <body>
-<h2>Upload Content</h2>
 
-<input id="title" placeholder="Title"><br>
-<select id="type">
-  <option value="song">Song</option>
-  <option value="podcast">Podcast</option>
-  <option value="video">Video</option>
-</select><br>
-<textarea id="desc" placeholder="Description"></textarea><br>
-<input type="file" id="file"><br>
-<button onclick="upload()">Upload</button>
+<header>🎤 SingerStream Admin Dashboard</header>
 
-<script src="js/config.js"></script>
+<div class="container">
+  <!-- Upload Section -->
+  <div class="upload-box">
+    <h3>Upload New Content</h3>
+
+    <input type="text" id="title" placeholder="Title">
+    
+    <select id="type">
+      <option value="song">Song</option>
+      <option value="podcast">Podcast</option>
+      <option value="video">Video</option>
+    </select>
+
+    <textarea id="description" placeholder="Description"></textarea>
+
+    <input type="file" id="file">
+
+    <button onclick="upload()">Upload</button>
+  </div>
+
+  <!-- Content List -->
+  <div class="list-box">
+    <h3>Uploaded Content</h3>
+    <div id="contentList">Loading...</div>
+  </div>
+</div>
+
 <script>
-function upload(){
-  const fd=new FormData();
-  fd.append("title",title.value);
-  fd.append("type",type.value);
-  fd.append("description",desc.value);
-  fd.append("file",file.files[0]);
+// const API_BASE = "http://localhost:3000/api";
+// const token = localStorage.getItem("token");
 
-  fetch(API_BASE+"/content",{
-    method:"POST",
-    headers:{Authorization:localStorage.getItem("token")},
-    body:fd
+// // Load content list
+// function loadContent() {
+//   fetch(API_BASE + "/content")
+//     .then(res => res.json())
+//     .then(data => {
+//       const list = document.getElementById("contentList");
+//       list.innerHTML = "";
+
+//       if (data.length === 0) {
+//         list.innerHTML = "<p>No content uploaded yet.</p>";
+//         return;
+//       }
+
+//       data.forEach(item => {
+//         const div = document.createElement("div");
+//         div.className = "item";
+//         div.innerHTML = `
+//           <span>${item.title} (${item.type})</span>
+//           <button class="delete" onclick="remove(${item.id})">Delete</button>
+//         `;
+//         list.appendChild(div);
+//       });
+//     });
+// }
+
+// Upload content
+function upload() {
+  const fd = new FormData();
+  fd.append("title", document.getElementById("title").value);
+  fd.append("type", document.getElementById("type").value);
+  fd.append("description", document.getElementById("description").value);
+  fd.append("file", document.getElementById("file").files[0]);
+
+  fetch(API_BASE + "/content", {
+    method: "POST",
+    headers: {
+      "Authorization": token
+    },
+    body: fd
   })
-  .then(r=>r.json())
-  .then(d=>alert(d.msg));
+  .then(res => res.json())
+  .then(data => {
+    alert(data.msg || "Uploaded");
+    loadContent();
+  })
+  .catch(err => console.log("Upload error:", err));
 }
+
+// Delete content
+function remove(id) {
+  if (!confirm("Delete this content?")) return;
+
+  fetch(API_BASE + "/content/" + id, {
+    method: "DELETE",
+    headers: {
+      "Authorization": token
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.msg || "Deleted");
+    loadContent();
+  });
+}
+
+// Initial load
+loadContent();
 </script>
+
 </body>
 </html>

@@ -1,32 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
+  <title>Login - SingerStream</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #1e3c72, #2a5298);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #1e3c72;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2a5298;
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    a {
+      color: #1e3c72;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-<h2>Login</h2>
-<input id="email" placeholder="Email"><br>
-<input id="password" type="password" placeholder="Password"><br>
-<button onclick="login()">Login</button>
 
-<script src="js/config.js"></script>
+<div class="login-box">
+  <h2>Login to SingerStream</h2>
+
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="password" id="password" placeholder="Password" required>
+
+  <button onclick="login()">Login</button>
+
+  <p>Don’t have an account?  
+    <a href="register.html">Sign up</a>
+  </p>
+
+  <div id="error" class="error"></div>
+</div>
+
 <script>
-function login(){
-  fetch(API_BASE + "/auth/login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      email:email.value,
-      password:password.value
-    })
-  })
-  .then(r=>r.json())
-  .then(d=>{
-    localStorage.setItem("token", d.token);
-    alert("Login success");
-    window.location="admin-dashboard.html";
-  });
-}
+// const API_BASE = "http://localhost:3000/api";
+
+// function login() {
+//   const email = document.getElementById("email").value;
+//   const password = document.getElementById("password").value;
+
+//   fetch(API_BASE + "/auth/login", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       email: email,
+//       password: password
+//     })
+//   })
+//   .then(res => res.json())
+//   .then(data => {
+//     if (data.token) {
+//       // save token
+//       localStorage.setItem("token", data.token);
+
+//       alert("Login successful!");
+//       // redirect to profile or home
+//       window.location = "profile.html";
+//     } else {
+//       document.getElementById("error").innerText = data.msg || "Login failed";
+//     }
+//   })
+//   .catch(err => {
+//     document.getElementById("error").innerText = "Server error";
+//     console.log(err);
+//   });
+// }
 </script>
+
 </body>
 </html>
