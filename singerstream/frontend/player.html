@@ -2,46 +2,7 @@
 <html>
 <head>
   <title>Player - SingerStream</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    .player-box {
-      background: #222;
-      padding: 20px;
-      border-radius: 12px;
-      width: 80%;
-      max-width: 700px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-
-    h2 {
-      margin-bottom: 10px;
-    }
-
-    audio, video {
-      width: 100%;
-      margin-top: 15px;
-      border-radius: 8px;
-    }
-
-    .back {
-      margin-top: 15px;
-      display: inline-block;
-      color: #ff512f;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+ <link rel="stylesheet" href="css/player.css">
 </head>
 <body>
 
@@ -53,45 +14,6 @@
 
   <a href="library.html" class="back">⬅ Back to Library</a>
 </div>
-
-<script>
-const API_BASE = "http://localhost:3000/api";
-
-// get id from URL: player.html?id=3
-const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
-
-fetch(API_BASE + "/content")
-  .then(res => res.json())
-  .then(data => {
-    const item = data.find(c => c.id == id);
-
-    if (!item) {
-      document.getElementById("title").innerText = "Content not found";
-      return;
-    }
-
-    document.getElementById("title").innerText = item.title;
-    document.getElementById("type").innerText = "Type: " + item.type;
-
-    const mediaDiv = document.getElementById("media");
-
-    if (item.type === "video") {
-      mediaDiv.innerHTML = `
-        <video controls autoplay>
-          <source src="${API_BASE}/content/stream/${item.id}">
-        </video>
-      `;
-    } else {
-      mediaDiv.innerHTML = `
-        <audio controls autoplay>
-          <source src="${API_BASE}/content/stream/${item.id}">
-        </audio>
-      `;
-    }
-  })
-  .catch(err => console.log("Player error:", err));
-</script>
 
 </body>
 </html>
