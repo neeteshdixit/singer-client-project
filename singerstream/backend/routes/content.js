@@ -37,6 +37,8 @@ router.post("/", auth, requireAdmin, upload.single("file"), async (req, res) => 
 router.get("/", auth, async (req, res) => {
   try {
     const { search, type, sort = "upload_date", limit = "50" } = req.query;
+    const role = req.user?.role;
+    const enforcedType = role === "fan" ? "song" : type;
     const values = [];
     const where = [];
 
@@ -45,8 +47,8 @@ router.get("/", auth, async (req, res) => {
       where.push(`(title ILIKE $${values.length - 1} OR description ILIKE $${values.length})`);
     }
 
-    if (type) {
-      values.push(type);
+    if (enforcedType) {
+      values.push(enforcedType);
       where.push(`type = $${values.length}`);
     }
 
@@ -77,14 +79,17 @@ router.get("/", auth, async (req, res) => {
 
 router.get("/stream/:id", auth, async (req, res) => {
   try {
-    const result = await db.query("SELECT file_path FROM content WHERE id=$1", [
+    const result = await db.query("SELECT file_path, type FROM content WHERE id=$1", [
       req.params.id
     ]);
     if (!result.rows.length) {
       return res.status(404).json({ msg: "Not found" });
     }
 
-    const filePath = result.rows[0].file_path;
+    const { file_path: filePath, type } = result.rows[0];
+    if (req.user?.role === "fan" && type !== "song") {
+      return res.status(403).json({ msg: "Fans can only stream songs" });
+    }
     const stat = fs.statSync(filePath);
 
     db.query("UPDATE content SET views_count = views_count + 1 WHERE id=$1", [
@@ -112,6 +117,9 @@ router.get("/:id", auth, async (req, res) => {
     }
 
     const content = result.rows[0];
+    if (req.user?.role === "fan" && content.type !== "song") {
+      return res.status(403).json({ msg: "Fans can only view songs" });
+    }
     content.file_url = `/api/content/stream/${content.id}`;
     res.json(content);
   } catch (err) {
