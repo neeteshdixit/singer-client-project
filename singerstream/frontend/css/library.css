@@ -8,8 +8,47 @@ header {
   background: #1e3c72;
   color: white;
   padding: 15px;
-  text-align: center;
   font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header-title {
+  font-weight: bold;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.header-link {
+  color: white;
+  text-decoration: none;
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 6px;
+}
+
+.header-link:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.header-btn {
+  padding: 6px 10px;
+  background: #ff512f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.header-btn:hover {
+  background: #dd2476;
 }
 
 .filters {
@@ -35,6 +74,15 @@ header {
 @media (max-width: 720px) {
   .filters {
     flex-direction: column;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-actions {
+    flex-wrap: wrap;
   }
 }
 

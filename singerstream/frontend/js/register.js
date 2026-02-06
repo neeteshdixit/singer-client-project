@@ -12,6 +12,7 @@ async function handleRegister(event) {
   const username = document.getElementById('username')?.value?.trim();
   const email = document.getElementById('email')?.value?.trim();
   const password = document.getElementById('password')?.value || '';
+  const button = event.target.querySelector('button[type="submit"]');
 
   if (!username || !password) {
     setRegisterError('Username and password are required.');
@@ -19,10 +20,19 @@ async function handleRegister(event) {
   }
 
   try {
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'Creating...';
+    }
     await auth.register(username, email, password);
     window.location.href = '/library.html';
   } catch (error) {
     setRegisterError(error.message || 'Registration failed. Please try again.');
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = 'Sign Up';
+    }
   }
 }
 

@@ -45,6 +45,11 @@ body {
       background: #dd2476;
     }
 
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
     .social-btn {
       display: flex;
       align-items: center;

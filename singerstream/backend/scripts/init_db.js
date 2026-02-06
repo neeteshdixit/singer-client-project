@@ -16,18 +16,23 @@ async function init() {
 
     if (adminUsername && adminPassword) {
       const existing = await pool.query(
-        'SELECT id FROM users WHERE username=$1',
-        [adminUsername]
+        'SELECT id, username, email, role FROM users WHERE username=$1 OR email=$2',
+        [adminUsername, adminEmail]
       );
+      const hash = await bcrypt.hash(adminPassword, 10);
+
       if (!existing.rows.length) {
-        const hash = await bcrypt.hash(adminPassword, 10);
         await pool.query(
           "INSERT INTO users(username,email,password_hash,role) VALUES($1,$2,$3,'admin')",
           [adminUsername, adminEmail, hash]
         );
         console.log('Admin user created.');
       } else {
-        console.log('Admin user already exists.');
+        await pool.query(
+          "UPDATE users SET username=$1, email=$2, password_hash=$3, role='admin' WHERE id=$4",
+          [adminUsername, adminEmail, hash, existing.rows[0].id]
+        );
+        console.log('Admin user updated.');
       }
     } else {
       console.log('Admin seed skipped (ADMIN_USERNAME/ADMIN_PASSWORD not set).');

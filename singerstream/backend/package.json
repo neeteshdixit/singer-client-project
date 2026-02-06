@@ -6,7 +6,8 @@
     "start": "node server.js",
     "dev": "node server.js",
     "dev:watch": "nodemon server.js",
-    "db:init": "node scripts/init_db.js"
+    "db:init": "node scripts/init_db.js",
+    "admin:sync": "node scripts/sync_admin.js"
   },
 
   "dependencies": {

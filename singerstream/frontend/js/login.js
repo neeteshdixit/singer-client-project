@@ -11,6 +11,7 @@ async function handleLogin(event) {
 
   const username = document.getElementById('username')?.value?.trim();
   const password = document.getElementById('password')?.value || '';
+  const button = event.target.querySelector('button[type="submit"]');
 
   if (!username || !password) {
     setError('Please enter your username and password.');
@@ -18,10 +19,19 @@ async function handleLogin(event) {
   }
 
   try {
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'Logging in...';
+    }
     await auth.login(username, password);
     window.location.href = '/library.html';
   } catch (error) {
     setError(error.message || 'Login failed. Please try again.');
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = 'Login';
+    }
   }
 }
 

@@ -36,8 +36,66 @@ async function loadContentList() {
   }
 }
 
+async function loadUserList() {
+  const container = document.getElementById('userList');
+  if (!container) return;
+
+  try {
+    const results = await api.get('/admin/users');
+    const users = results.users || [];
+
+    if (!users.length) {
+      container.innerHTML = '<p>No users found.</p>';
+      return;
+    }
+
+    container.innerHTML = `
+      <div class="user-row header">
+        <span>Username</span>
+        <span>Email</span>
+        <span>Role</span>
+        <span>Action</span>
+      </div>
+      ${users.map(user => `
+        <div class="user-row">
+          <span>${user.username}</span>
+          <span>${user.email || '-'}</span>
+          <span>
+            <select class="role-select" data-id="${user.id}">
+              <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>admin</option>
+              <option value="fan" ${user.role === 'fan' ? 'selected' : ''}>fan</option>
+            </select>
+          </span>
+          <span>
+            <button class="save-role" data-id="${user.id}">Save</button>
+          </span>
+        </div>
+      `).join('')}
+    `;
+
+    container.querySelectorAll('button.save-role').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-id');
+        const select = container.querySelector(`select.role-select[data-id="${id}"]`);
+        const role = select ? select.value : 'fan';
+
+        try {
+          await api.put(`/admin/users/${id}/role`, { role });
+          loadUserList();
+        } catch (err) {
+          alert(err.message || 'Role update failed');
+        }
+      });
+    });
+  } catch (error) {
+    console.error('Failed to load user list:', error);
+    container.innerHTML = '<p>Failed to load users.</p>';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (!auth.requireAdmin()) return;
   window.loadContentList = loadContentList;
   loadContentList();
+  loadUserList();
 });
