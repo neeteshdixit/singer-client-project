@@ -90,3 +90,8 @@ header {
 .btn:hover {
   background: #2a5298;
 }
+
+.text-center {
+  text-align: center;
+  color: #555;
+}

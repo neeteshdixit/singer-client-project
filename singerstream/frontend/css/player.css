@@ -23,6 +23,17 @@
       margin-bottom: 10px;
     }
 
+    #contentType {
+      color: #bbb;
+      margin: 0 0 8px 0;
+    }
+
+    #contentDescription {
+      color: #ddd;
+      margin: 0 0 12px 0;
+      font-size: 14px;
+    }
+
     audio, video {
       width: 100%;
       margin-top: 15px;
