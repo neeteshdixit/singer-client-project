@@ -87,6 +87,10 @@ router.get("/stream/:id", auth, async (req, res) => {
     const filePath = result.rows[0].file_path;
     const stat = fs.statSync(filePath);
 
+    db.query("UPDATE content SET views_count = views_count + 1 WHERE id=$1", [
+      req.params.id
+    ]).catch(() => {});
+
     res.writeHead(200, {
       "Content-Length": stat.size
     });

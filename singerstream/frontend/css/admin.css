@@ -71,4 +71,19 @@
     .delete:hover {
       background: darkred;
     }
+
+    .upload-zone {
+      margin: 10px 0;
+      padding: 20px;
+      border: 2px dashed #1e3c72;
+      border-radius: 8px;
+      text-align: center;
+      color: #1e3c72;
+      cursor: pointer;
+      background: #f8fbff;
+    }
+
+    .upload-zone.drag-over {
+      background: #e9f1ff;
+    }
  

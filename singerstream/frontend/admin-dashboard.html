@@ -1,112 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard - SingerStream</title>
+  <link rel="stylesheet" href="css/admin.css">
 </head>
-<link rel="stylesheet" href="css/admin.css">
 <body>
 
-<header>🎤 SingerStream Admin Dashboard</header>
+<header>SingerStream Admin Dashboard</header>
 
 <div class="container">
-  <!-- Upload Section -->
   <div class="upload-box">
     <h3>Upload New Content</h3>
 
-    <input type="text" id="title" placeholder="Title">
-    
-    <select id="type">
-      <option value="song">Song</option>
-      <option value="podcast">Podcast</option>
-      <option value="video">Video</option>
-    </select>
+    <form id="uploadForm">
+      <input type="text" id="contentTitle" placeholder="Title" required>
 
-    <textarea id="description" placeholder="Description"></textarea>
+      <select id="contentType">
+        <option value="song">Song</option>
+        <option value="podcast">Podcast</option>
+        <option value="video">Video</option>
+      </select>
 
-    <input type="file" id="file">
+      <textarea id="contentDescription" placeholder="Description"></textarea>
 
-    <button onclick="upload()">Upload</button>
+      <div id="uploadZone" class="upload-zone">
+        <p>Click or drag a file here to upload</p>
+        <input type="file" id="fileInput" hidden>
+      </div>
+
+      <div id="filePreview" style="display:none;">
+        <p><strong>File:</strong> <span id="fileName"></span></p>
+        <p><strong>Size:</strong> <span id="fileSize"></span></p>
+      </div>
+
+      <div id="uploadProgress" style="display:none;">
+        <div id="uploadProgressFill" style="height: 8px; background: #1e3c72; width: 0;"></div>
+      </div>
+
+      <button type="submit">Upload</button>
+    </form>
   </div>
 
-  <!-- Content List -->
   <div class="list-box">
     <h3>Uploaded Content</h3>
     <div id="contentList">Loading...</div>
   </div>
 </div>
 
-<script>
-// const API_BASE = "http://localhost:3000/api";
-// const token = localStorage.getItem("token");
-
-// // Load content list
-// function loadContent() {
-//   fetch(API_BASE + "/content")
-//     .then(res => res.json())
-//     .then(data => {
-//       const list = document.getElementById("contentList");
-//       list.innerHTML = "";
-
-//       if (data.length === 0) {
-//         list.innerHTML = "<p>No content uploaded yet.</p>";
-//         return;
-//       }
-
-//       data.forEach(item => {
-//         const div = document.createElement("div");
-//         div.className = "item";
-//         div.innerHTML = `
-//           <span>${item.title} (${item.type})</span>
-//           <button class="delete" onclick="remove(${item.id})">Delete</button>
-//         `;
-//         list.appendChild(div);
-//       });
-//     });
-// }
-
-// Upload content
-function upload() {
-  const fd = new FormData();
-  fd.append("title", document.getElementById("title").value);
-  fd.append("type", document.getElementById("type").value);
-  fd.append("description", document.getElementById("description").value);
-  fd.append("file", document.getElementById("file").files[0]);
-
-  fetch(API_BASE + "/content", {
-    method: "POST",
-    headers: {
-      "Authorization": token
-    },
-    body: fd
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert(data.msg || "Uploaded");
-    loadContent();
-  })
-  .catch(err => console.log("Upload error:", err));
-}
-
-// Delete content
-function remove(id) {
-  if (!confirm("Delete this content?")) return;
-
-  fetch(API_BASE + "/content/" + id, {
-    method: "DELETE",
-    headers: {
-      "Authorization": token
-    }
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert(data.msg || "Deleted");
-    loadContent();
-  });
-}
-
-// Initial load
-loadContent();
-</script>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/upload.js"></script>
+<script src="js/admin.js"></script>
 
 </body>
 </html>

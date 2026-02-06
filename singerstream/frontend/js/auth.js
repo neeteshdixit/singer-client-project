@@ -95,6 +95,10 @@ class AuthManager {
 
   // Protect admin pages
   requireAdmin() {
+    if (!this.isLoggedIn()) {
+      window.location.href = '/login.html';
+      return false;
+    }
     if (!this.isAdmin()) {
       alert('Admin access required');
       window.location.href = '/index.html';
