@@ -76,3 +76,9 @@ body {
       font-size: 14px;
       color: #888;
     }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 10px;
+    }
