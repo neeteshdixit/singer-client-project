@@ -3,135 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SingerStream | Exclusive Music</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <title>SingerStream | Artist Portfolio</title>
+  <link rel="stylesheet" href="css/main.css">
 </head>
-<link rel="stylesheet" href="css/main.css">
 <body>
 
-<div id="cursor"></div>
-<canvas id="bg-canvas"></canvas>
-
-<nav>
-  <h2 class="animate__animated animate__fadeInDown">SingerStream</h2>
-  <a href="#" onclick="goLogin()" class="nav-btn animate__animated animate__fadeInDown">ENTER STUDIO</a>
+<nav class="navbar">
+  <div class="brand">
+    <span class="brand-mark">SS</span>
+    <span class="brand-name">SingerStream</span>
+  </div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#releases">Releases</a>
+    <a href="#contact">Get in Touch</a>
+  </div>
+  <div class="nav-actions">
+    <a class="btn ghost" href="login.html">Login</a>
+    <a class="btn primary" href="register.html">Sign Up</a>
+  </div>
 </nav>
 
-<header>
-  <h1 class="animate__animated animate__zoomIn">RESONANCE</h1>
-  <p class="animate__animated animate__fadeIn animate__delay-1s" style="letter-spacing: 5px; opacity: 0.6;">THE EXCLUSIVE AUDIO EXPERIENCE</p>
+<header class="hero">
+  <div class="hero-content">
+    <p class="eyebrow">New Era. Live Sound.</p>
+    <h1>Elevated vocals and modern fusion for the global stage.</h1>
+    <p class="hero-subtitle">
+      A curated portfolio of originals, covers, and live sessions. Discover fresh releases,
+      cinematic vocal textures, and exclusive behind-the-scenes moments.
+    </p>
+    <div class="hero-actions">
+      <a class="btn primary" href="login.html">Listen Now</a>
+      <a class="btn outline" href="#contact">Book a Session</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <h3>120K+</h3>
+        <span>Streams</span>
+      </div>
+      <div>
+        <h3>40+</h3>
+        <span>Releases</span>
+      </div>
+      <div>
+        <h3>12</h3>
+        <span>Live Shows</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="visual-card">
+      <img src="assets/stage-silhouette.jpg" alt="Stage performance" />
+      <div class="visual-caption">
+        <span>Live at Blue Note</span>
+        <span>2026</span>
+      </div>
+    </div>
+    <div class="visual-accent"></div>
+  </div>
 </header>
 
-<section class="reveal">
-  <div style="display: flex; align-items: center; justify-content: center; gap: 50px; flex-wrap: wrap; text-align: left;">
-    <div style="flex: 1; min-width: 300px;">
-       <h2 style="font-size: 3rem; margin-bottom: 20px; line-height: 1;">THE VOICE BEHIND THE SOUND</h2>
-       <p style="opacity: 0.8; line-height: 1.8; font-size: 1.1rem;">
-         Born in the heart of the underground scene, my music is a fusion of soul, electronic textures, and raw storytelling. 
-         With over a decade of classical training and a lifetime of searching for the perfect frequency, 
-         SingerStream is where I strip away the industry filters.
-       </p>
-       <p style="opacity: 0.8; line-height: 1.8; font-size: 1.1rem;">
-         Every note you hear here is a piece of a larger puzzle. This is where the demos live, where the stories are told, and where you belong.
-       </p>
+<section id="about" class="section about">
+  <div class="section-title">
+    <p class="eyebrow">Artist Story</p>
+    <h2>Signature voice, modern sound.</h2>
+  </div>
+  <div class="about-grid">
+    <p>
+      SingerStream blends classical training with contemporary production. The result is a soundscape
+      that feels intimate yet expansive — from stripped acoustic takes to cinematic, layered vocals.
+    </p>
+    <p>
+      This platform is a direct line to the music: early access tracks, exclusive live sessions,
+      and a private space for fans who want to go deeper than the charts.
+    </p>
+  </div>
+</section>
+
+<section id="releases" class="section releases">
+  <div class="section-title">
+    <p class="eyebrow">Featured</p>
+    <h2>Latest Releases</h2>
+  </div>
+  <div class="release-grid">
+    <div class="release-card">
+      <h3>Resonance (Live)</h3>
+      <p>Raw vocals. No filters. A room full of energy.</p>
+      <span class="tag">Live</span>
     </div>
-    <div style="flex: 1; min-width: 300px; height: 400px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 40px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-       <span style="opacity: 0.3; letter-spacing: 5px;">[ SINGER IMAGE ]</span>
-       <div style="position: absolute; bottom: 20px; left: 20px; font-weight: bold; color: var(--primary);">EST. 2014</div>
+    <div class="release-card">
+      <h3>Midnight Echoes</h3>
+      <p>Ambient synth layers and a soaring hook.</p>
+      <span class="tag">Single</span>
+    </div>
+    <div class="release-card">
+      <h3>Acoustic Diaries</h3>
+      <p>Intimate takes recorded in one breath.</p>
+      <span class="tag">EP</span>
     </div>
   </div>
 </section>
 
-<section class="reveal" id="contact">
-  <h2 style="font-size: 2.5rem; margin-bottom: 10px;">GET IN TOUCH</h2>
-  <p style="opacity: 0.6; margin-bottom: 40px;">For bookings, collaborations, or just to say hello.</p>
-  
-  <div style="max-width: 600px; margin: auto; background: var(--glass); padding: 40px; border-radius: 30px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
-    <form style="display: flex; flex-direction: column; gap: 20px;">
-      <div style="display: flex; gap: 10px;">
-        <input type="text" placeholder="Name" style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; border-radius: 10px; color: white; outline: none;">
-        <input type="email" placeholder="Email" style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; border-radius: 10px; color: white; outline: none;">
+<section id="contact" class="section contact">
+  <div class="section-title">
+    <p class="eyebrow">Get in Touch</p>
+    <h2>Let’s create something unforgettable.</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-images">
+      <img class="image-main" src="assets/artist-portrait.jpg" alt="Artist portrait" />
+      <img class="image-overlay" src="assets/stage-silhouette.jpg" alt="Live performance" />
+    </div>
+    <div class="contact-card">
+      <form id="contactForm">
+        <div class="form-row">
+          <input type="text" id="contactName" placeholder="Your name" required>
+          <input type="email" id="contactEmail" placeholder="Your email" required>
+        </div>
+        <input type="text" id="contactSubject" placeholder="Subject" required>
+        <textarea id="contactMessage" rows="5" placeholder="Write your message..." required></textarea>
+        <button class="btn primary" type="submit">Send Message</button>
+      </form>
+      <div class="contact-details">
+        <p><strong>Email:</strong> dixitneetesh857@gmail.com</p>
+        <p><strong>Management:</strong> +91 98765 43210</p>
+        <p><strong>Location:</strong> New Delhi, India</p>
       </div>
-      <textarea placeholder="Your Message" rows="5" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; border-radius: 10px; color: white; outline: none; resize: none;"></textarea>
-      
-      <button type="button" class="nav-btn" style="width: 100%; cursor: none;">SEND MESSAGE</button>
-    </form>
-    
-    <div style="margin-top: 30px; display: flex; justify-content: center; gap: 40px; opacity: 0.7; font-size: 0.9rem;">
-      <span>IG: @singer_official</span>
-      <span>TW: @singer_stream</span>
-      <span>YT: SingerStream</span>
     </div>
   </div>
 </section>
+
+<footer class="footer">
+  <p>© 2026 SingerStream. All rights reserved.</p>
+</footer>
+
 <script>
-  // 1. Custom Cursor Logic
-  const cursor = document.getElementById('cursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const subject = document.getElementById('contactSubject').value.trim();
+    const message = document.getElementById('contactMessage').value.trim();
+
+    const mailBody = `Name: ${name}%0AEmail: ${email}%0A%0A${message}`;
+    const mailto = `mailto:dixitneetesh857@gmail.com?subject=${encodeURIComponent(subject)}&body=${mailBody}`;
+    window.location.href = mailto;
   });
-
-  document.querySelectorAll('a, .card, button').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-      cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
-      cursor.style.background = 'rgba(255, 81, 47, 0.2)';
-    });
-    item.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-      cursor.style.background = 'transparent';
-    });
-  });
-
-  // 2. Simple Particle Background
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  let particles = [];
-  for(let i=0; i<50; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      size: Math.random() * 2,
-      speed: Math.random() * 0.5
-    });
-  }
-
-  function animate() {
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-    ctx.fillStyle = "rgba(255,255,255,0.2)";
-    particles.forEach(p => {
-      p.y -= p.speed;
-      if(p.y < 0) p.y = canvas.height;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-      ctx.fill();
-    });
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  // 3. Navigation Logic
-  function goLogin() {
-    // Correct way to redirect
-    window.location.href = "login.html";
-  }
-
-  // 4. Scroll Reveal
-  function reveal() {
-    var reveals = document.querySelectorAll(".reveal");
-    reveals.forEach(el => {
-      var windowHeight = window.innerHeight;
-      var elementTop = el.getBoundingClientRect().top;
-      if (elementTop < windowHeight - 100) {
-        el.classList.add("active");
-      }
-    });
-  }
-  window.addEventListener("scroll", reveal);
-  reveal();
 </script>
 
 </body>
