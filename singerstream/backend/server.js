@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth");
 const contentRoutes = require("./routes/content");
 const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
+const contactRoutes = require("./routes/contact");
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/content", contentRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/contact", contactRoutes);
 
 // Serve frontend static files
 const path = require('path');

@@ -205,6 +205,17 @@ a {
   padding: 80px 6%;
 }
 
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .section-title h2 {
   font-size: 2.2rem;
   margin: 10px 0 24px;
@@ -321,6 +332,20 @@ a {
   margin-top: 18px;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.contact-status {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.contact-status.success {
+  color: #7ef4b0;
+}
+
+.contact-status.error {
+  color: #ff8a5b;
 }
 
 .footer {

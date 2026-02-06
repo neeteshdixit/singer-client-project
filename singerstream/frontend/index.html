@@ -24,7 +24,7 @@
   </div>
 </nav>
 
-<header class="hero">
+<header class="hero reveal">
   <div class="hero-content">
     <p class="eyebrow">New Era. Live Sound.</p>
     <h1>Elevated vocals and modern fusion for the global stage.</h1>
@@ -63,7 +63,7 @@
   </div>
 </header>
 
-<section id="about" class="section about">
+<section id="about" class="section about reveal">
   <div class="section-title">
     <p class="eyebrow">Artist Story</p>
     <h2>Signature voice, modern sound.</h2>
@@ -80,7 +80,7 @@
   </div>
 </section>
 
-<section id="releases" class="section releases">
+<section id="releases" class="section releases reveal">
   <div class="section-title">
     <p class="eyebrow">Featured</p>
     <h2>Latest Releases</h2>
@@ -104,7 +104,7 @@
   </div>
 </section>
 
-<section id="contact" class="section contact">
+<section id="contact" class="section contact reveal">
   <div class="section-title">
     <p class="eyebrow">Get in Touch</p>
     <h2>Let’s create something unforgettable.</h2>
@@ -122,7 +122,8 @@
         </div>
         <input type="text" id="contactSubject" placeholder="Subject" required>
         <textarea id="contactMessage" rows="5" placeholder="Write your message..." required></textarea>
-        <button class="btn primary" type="submit">Send Message</button>
+        <button class="btn primary" type="submit" id="contactSubmit">Send Message</button>
+        <p id="contactStatus" class="contact-status"></p>
       </form>
       <div class="contact-details">
         <p><strong>Email:</strong> dixitneetesh857@gmail.com</p>
@@ -138,17 +139,64 @@
 </footer>
 
 <script>
-  const form = document.getElementById('contactForm');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('contactName').value.trim();
-    const email = document.getElementById('contactEmail').value.trim();
-    const subject = document.getElementById('contactSubject').value.trim();
-    const message = document.getElementById('contactMessage').value.trim();
+  const revealItems = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18 });
 
-    const mailBody = `Name: ${name}%0AEmail: ${email}%0A%0A${message}`;
-    const mailto = `mailto:dixitneetesh857@gmail.com?subject=${encodeURIComponent(subject)}&body=${mailBody}`;
-    window.location.href = mailto;
+  revealItems.forEach(item => revealObserver.observe(item));
+
+  const form = document.getElementById('contactForm');
+  const statusEl = document.getElementById('contactStatus');
+  const submitBtn = document.getElementById('contactSubmit');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusEl.textContent = '';
+
+    const payload = {
+      name: document.getElementById('contactName').value.trim(),
+      email: document.getElementById('contactEmail').value.trim(),
+      subject: document.getElementById('contactSubject').value.trim(),
+      message: document.getElementById('contactMessage').value.trim()
+    };
+
+    if (!payload.name || !payload.email || !payload.subject || !payload.message) {
+      statusEl.textContent = 'Please fill out all fields.';
+      statusEl.className = 'contact-status error';
+      return;
+    }
+
+    try {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.msg || 'Failed to send');
+      }
+
+      statusEl.textContent = 'Message sent successfully!';
+      statusEl.className = 'contact-status success';
+      form.reset();
+    } catch (err) {
+      statusEl.textContent = err.message || 'Failed to send message.';
+      statusEl.className = 'contact-status error';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message';
+    }
   });
 </script>
 
