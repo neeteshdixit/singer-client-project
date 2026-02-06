@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(100) UNIQUE NOT NULL,
   email VARCHAR(150) UNIQUE,
@@ -7,7 +7,7 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE content (
+CREATE TABLE IF NOT EXISTS content (
   id SERIAL PRIMARY KEY,
   title VARCHAR(200),
   type VARCHAR(10) CHECK (type IN ('song','podcast','video')),
@@ -19,7 +19,7 @@ CREATE TABLE content (
   admin_id INT REFERENCES users(id)
 );
 
-CREATE TABLE favorites (
+CREATE TABLE IF NOT EXISTS favorites (
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id),
   content_id INT REFERENCES content(id),
