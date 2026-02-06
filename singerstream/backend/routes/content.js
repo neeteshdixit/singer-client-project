@@ -75,25 +75,6 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.get("/:id", auth, async (req, res) => {
-  try {
-    const result = await db.query(
-      "SELECT id,title,type,description,thumbnail_url,upload_date,views_count FROM content WHERE id=$1",
-      [req.params.id]
-    );
-    if (!result.rows.length) {
-      return res.status(404).json({ msg: "Not found" });
-    }
-
-    const content = result.rows[0];
-    content.file_url = `/api/content/stream/${content.id}`;
-    res.json(content);
-  } catch (err) {
-    console.error("Content detail error:", err);
-    res.status(500).json({ msg: "Server error" });
-  }
-});
-
 router.get("/stream/:id", auth, async (req, res) => {
   try {
     const result = await db.query("SELECT file_path FROM content WHERE id=$1", [
@@ -112,6 +93,25 @@ router.get("/stream/:id", auth, async (req, res) => {
     fs.createReadStream(filePath).pipe(res);
   } catch (err) {
     console.error("Stream error:", err);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT id,title,type,description,thumbnail_url,upload_date,views_count FROM content WHERE id=$1",
+      [req.params.id]
+    );
+    if (!result.rows.length) {
+      return res.status(404).json({ msg: "Not found" });
+    }
+
+    const content = result.rows[0];
+    content.file_url = `/api/content/stream/${content.id}`;
+    res.json(content);
+  } catch (err) {
+    console.error("Content detail error:", err);
     res.status(500).json({ msg: "Server error" });
   }
 });

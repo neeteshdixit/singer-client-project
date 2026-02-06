@@ -1,9 +1,9 @@
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(100),
+  username VARCHAR(100) UNIQUE NOT NULL,
   email VARCHAR(150) UNIQUE,
-  password_hash TEXT,
-  role VARCHAR(10) CHECK (role IN ('admin','fan')),
+  password_hash TEXT NOT NULL,
+  role VARCHAR(10) NOT NULL CHECK (role IN ('admin','fan')),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -34,8 +34,8 @@ class APIClient {
 
       if (!response.ok) {
         let error;
-        try { error = await response.json(); } catch (e) { error = { error: response.statusText }; }
-        throw new Error(error.error || 'Request failed');
+        try { error = await response.json(); } catch (e) { error = { msg: response.statusText }; }
+        throw new Error(error.msg || error.error || 'Request failed');
       }
 
       return await response.json();
@@ -80,7 +80,7 @@ class APIClient {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
+    const response = await fetch(this.buildURL(endpoint), {
       method: 'POST',
       headers,
       body: formData // Don't set Content-Type, browser will set it with boundary
@@ -88,7 +88,7 @@ class APIClient {
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error || 'Upload failed');
+      throw new Error(error.msg || error.error || 'Upload failed');
     }
 
     return await response.json();
