@@ -67,7 +67,7 @@ class ContentSearch {
         <div class="content-info">
           <h3 class="content-title">${item.title}</h3>
           <p class="content-meta">
-            ${item.type.toUpperCase()} • ${item.views_count || 0} views •
+            ${item.type.toUpperCase()} - ${item.views_count || 0} views - 
             ${new Date(item.upload_date).toLocaleDateString()}
           </p>
         </div>

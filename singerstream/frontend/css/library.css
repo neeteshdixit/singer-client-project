@@ -32,6 +32,12 @@ header {
   flex: 1;
 }
 
+@media (max-width: 720px) {
+  .filters {
+    flex-direction: column;
+  }
+}
+
 .container {
   padding: 20px;
   display: grid;
@@ -47,6 +53,12 @@ header {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.content-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .content-thumbnail {

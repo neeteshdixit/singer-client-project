@@ -30,4 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) {
     form.addEventListener('submit', handleLogin);
   }
+
+  if (auth.isLoggedIn()) {
+    window.location.href = '/library.html';
+  }
 });
