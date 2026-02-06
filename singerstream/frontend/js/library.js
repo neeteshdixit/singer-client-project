@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   if (!auth.requireAuth()) return;
 
+  if (window.location.pathname.endsWith('/fan-dashboard.html') && auth.isAdmin()) {
+    window.location.href = '/admin-dashboard.html';
+    return;
+  }
+
   const greeting = document.getElementById('userGreeting');
   if (greeting && auth.currentUser) {
     const role = auth.currentUser.role || 'fan';

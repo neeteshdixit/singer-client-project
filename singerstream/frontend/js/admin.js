@@ -95,6 +95,34 @@ async function loadUserList() {
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!auth.requireAdmin()) return;
+  const adminLabel = document.getElementById('adminUserLabel');
+  const setLabel = (user) => {
+    if (!adminLabel) return;
+    if (!user) {
+      adminLabel.textContent = 'Not logged in';
+      return;
+    }
+    adminLabel.textContent = `Logged in as ${user.username} (${user.role})`;
+  };
+
+  setLabel(auth.currentUser);
+  api.get('/user/me')
+    .then((response) => {
+      if (response && response.user) {
+        auth.currentUser = response.user;
+        localStorage.setItem(USER_KEY, JSON.stringify(response.user));
+        setLabel(response.user);
+      }
+    })
+    .catch(() => {
+      setLabel(auth.currentUser);
+    });
+
+  const logoutBtn = document.getElementById('adminLogoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => auth.logout());
+  }
+
   window.loadContentList = loadContentList;
   loadContentList();
   loadUserList();

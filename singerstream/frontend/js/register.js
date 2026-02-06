@@ -25,7 +25,7 @@ async function handleRegister(event) {
       button.textContent = 'Creating...';
     }
     await auth.register(username, email, password);
-    window.location.href = '/library.html';
+    window.location.href = '/fan-dashboard.html';
   } catch (error) {
     setRegisterError(error.message || 'Registration failed. Please try again.');
   } finally {
@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (auth.isLoggedIn()) {
-    window.location.href = '/library.html';
+    const role = auth.currentUser?.role;
+    window.location.href = role === 'admin' ? '/admin-dashboard.html' : '/fan-dashboard.html';
   }
 });

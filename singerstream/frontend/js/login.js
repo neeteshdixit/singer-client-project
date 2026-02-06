@@ -24,7 +24,8 @@ async function handleLogin(event) {
       button.textContent = 'Logging in...';
     }
     await auth.login(username, password);
-    window.location.href = '/library.html';
+    const role = auth.currentUser?.role;
+    window.location.href = role === 'admin' ? '/admin-dashboard.html' : '/fan-dashboard.html';
   } catch (error) {
     setError(error.message || 'Login failed. Please try again.');
   } finally {
@@ -42,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (auth.isLoggedIn()) {
-    window.location.href = '/library.html';
+    const role = auth.currentUser?.role;
+    window.location.href = role === 'admin' ? '/admin-dashboard.html' : '/fan-dashboard.html';
   }
 });

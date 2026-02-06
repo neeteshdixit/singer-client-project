@@ -20,8 +20,11 @@ const ROUTES = {
     UPLOAD: `${API_BASE_URL}/content`
   },
   USER: {
-    PROFILE: `${API_BASE_URL}/user/profile`,
+    ME: `${API_BASE_URL}/user/me`,
     FAVORITES: `${API_BASE_URL}/user/favorites`
+  },
+  ADMIN: {
+    USERS: `${API_BASE_URL}/admin/users`
   },
   ANALYTICS: {
     OVERVIEW: `${API_BASE_URL}/analytics/overview`,

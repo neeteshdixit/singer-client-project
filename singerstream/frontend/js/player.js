@@ -39,6 +39,12 @@ class MediaPlayer {
 document.addEventListener('DOMContentLoaded', () => {
   if (!auth.requireAuth()) return;
 
+  const backLink = document.getElementById('backLink');
+  if (backLink) {
+    backLink.href = auth.isAdmin() ? '/admin-dashboard.html' : '/fan-dashboard.html';
+    backLink.textContent = auth.isAdmin() ? 'Back to Admin' : 'Back to Dashboard';
+  }
+
   const audioEl = document.getElementById('audioPlayer');
   const videoEl = document.getElementById('videoPlayer');
 
