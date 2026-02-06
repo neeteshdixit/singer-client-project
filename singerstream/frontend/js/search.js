@@ -9,7 +9,6 @@ class ContentSearch {
     const sortFilter = document.getElementById('sortFilter');
 
     if (searchInput) {
-      // Debounced search
       let searchTimeout;
       searchInput.addEventListener('input', (e) => {
         clearTimeout(searchTimeout);
@@ -40,7 +39,8 @@ class ContentSearch {
       params.append('limit', '50');
 
       const results = await api.get(`/content?${params.toString()}`);
-      this.displayResults(results.content);
+      const content = results.content || results || [];
+      this.displayResults(content);
     } catch (error) {
       console.error('Search failed:', error);
     }
@@ -55,33 +55,33 @@ class ContentSearch {
     const container = document.getElementById('contentList');
     if (!container) return;
 
-    if (content.length === 0) {
+    if (!content.length) {
       container.innerHTML = '<p class="text-center">No content found</p>';
       return;
     }
 
     container.innerHTML = content.map(item => `
       <div class="content-item">
-        <img src="${item.thumbnail_url || '/assets/default-thumbnail.jpg'}" 
+        <img src="${item.thumbnail_url || '/assets/default-thumbnail.jpg'}"
              alt="${item.title}" class="content-thumbnail">
         <div class="content-info">
           <h3 class="content-title">${item.title}</h3>
           <p class="content-meta">
-            ${item.type.toUpperCase()} • ${item.views_count} views • 
+            ${item.type.toUpperCase()} • ${item.views_count || 0} views •
             ${new Date(item.upload_date).toLocaleDateString()}
           </p>
         </div>
         <button class="btn btn-primary" onclick="window.location.href='/player.html?id=${item.id}'">
-          ▶️ Play
+          Play
         </button>
       </div>
     `).join('');
   }
 }
 
-// Initialize search
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('searchInput')) {
-    new ContentSearch();
+    const search = new ContentSearch();
+    search.performSearch('');
   }
 });

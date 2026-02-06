@@ -36,21 +36,25 @@ class AuthManager {
         password
       });
 
-      this.saveUser(response.user, response.token);
+      if (response.user && response.token) {
+        this.saveUser(response.user, response.token);
+      }
       return response;
     } catch (error) {
       throw error;
     }
   }
 
-  async login(email, password) {
+  async login(username, password) {
     try {
       const response = await api.post('/auth/login', {
-        email,
+        username,
         password
       });
 
-      this.saveUser(response.user, response.token);
+      if (response.user && response.token) {
+        this.saveUser(response.user, response.token);
+      }
       return response;
     } catch (error) {
       throw error;
@@ -68,6 +72,10 @@ class AuthManager {
       if (!response.valid) {
         this.clearUser();
         return false;
+      }
+      if (response.user) {
+        this.currentUser = response.user;
+        localStorage.setItem(USER_KEY, JSON.stringify(response.user));
       }
       return true;
     } catch (error) {
